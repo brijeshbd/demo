@@ -36,6 +36,7 @@ public class UserDaoImpl implements UserDao{
                 user.setEmail(resultSet.getString("email"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
+                user.setPassword(resultSet.getString("password"));
                 return user;
             });
         } catch (EmptyResultDataAccessException e) {

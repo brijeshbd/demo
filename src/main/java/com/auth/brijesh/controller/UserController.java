@@ -1,5 +1,6 @@
 package com.auth.brijesh.controller;
 
+import com.auth.brijesh.model.request.UserLoginTemplate;
 import com.auth.brijesh.model.request.UserRequest;
 import com.auth.brijesh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class UserController {
     public ResponseEntity<String> addUser(@RequestBody UserRequest userRequest){
         userService.saveUser(userRequest);
         return ResponseEntity.ok("Added...");
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
+    public ResponseEntity<String> loginUser(@RequestBody UserLoginTemplate userLoginTemplate){
+        String result = userService.checkUserForLogin(userLoginTemplate);
+        return ResponseEntity.ok(result);
     }
 
 }
