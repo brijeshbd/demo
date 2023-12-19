@@ -7,6 +7,7 @@ import com.auth.brijesh.model.request.UserLoginTemplate;
 import com.auth.brijesh.model.request.UserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,11 +15,18 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    JwtService jwtService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Override
     public void saveUser(UserRequest userRequest) {
         UserType userType;
         userType = (userRequest.getFirstName().equals("Brijesh")) ? UserType.ADMIN:UserType.NORMAL;
-        userDao.saveUser(userRequest, userRequest.getPassword(), userType);
+
+        userDao.saveUser(userRequest, passwordEncoder.encode(userRequest.getPassword()), userType);
     }
 
     @Override
@@ -31,7 +39,7 @@ public class UserServiceImpl implements UserService{
                 return "Password is Not Matched...";
             }
             System.out.println("Token is generating...");
-//            token = JwtUtil.generateToken(user.getEmail());
+            token = jwtService.generateToken(user);
 //            System.out.println(token);
         }
         return "Token is : " + token;
