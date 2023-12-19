@@ -22,11 +22,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public String checkUserForLogin(UserLoginTemplate userLoginTemplate) {
         User user = userDao.loginUser(userLoginTemplate.getEmail());
+        System.out.println(user.getEmail());
+        String token = null;
         if(user!=null){
             if(!userLoginTemplate.getPassword().equals(user.getPassword())){
                 return "Password is Not Matched...";
             }
+            System.out.println("Token is generating...");
+//            token = JwtUtil.generateToken(user.getEmail());
+//            System.out.println(token);
         }
-        return "Token is : ";
+        return "Token is : " + token;
     }
 }
