@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public UserResponse findUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         return null;
     }
 }
